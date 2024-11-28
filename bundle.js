@@ -43616,7 +43616,7 @@ function addPrimitiveAttributes( geometry, primitiveDef, parser ) {
 
 let model;
 
-document.querySelector('[data-3d="c"]');
+const viewport = document.querySelector('[data-3d="c"]');
 
 // Camera
 const camera = new PerspectiveCamera(60, 2, 1, 1000);
@@ -43645,7 +43645,7 @@ loader.load(
 const renderer = new WebGLRenderer({ antialias: true });
 renderer.setSize(window.innerWidth, window.innerHeight);
 renderer.setAnimationLoop(animate);
-document.body.appendChild(renderer.domElement);
+viewport.appendChild(renderer.domElement);
 renderer.shadowMap.enabled = true;
 renderer.shadowMap.type = PCFShadowMap;
 
