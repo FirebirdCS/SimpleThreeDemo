@@ -43625,12 +43625,12 @@ const viewport = document.querySelector('[data-3d="c"]');
 
 // Camera
 const camera = new PerspectiveCamera(
-  75,
+  60,
   window.innerWidth / window.innerHeight,
   0.1,
   1000
 );
-camera.position.set(4, 3, 5);
+camera.position.set(3, 4, 3);
 
 // Scene
 const scene = new Scene();
@@ -43641,6 +43641,8 @@ loader.load(
   "https://cdn.prod.website-files.com/65bd1a06f6cf505c41a8973d/67489b79bd1c4bfeb988213d_bca_service_letter_copy.txt",
   function (gltf) {
     model = gltf.scene;
+    model.position.set(0, 0, 0);
+    model.scale.set(0.8, 0.8, 0.8);
     scene.add(model);
   },
   undefined,
@@ -43663,6 +43665,10 @@ scene.background = new Color("#fbfaf8");
 const controls = new OrbitControls(camera, renderer.domElement);
 controls.enableDamping = true;
 controls.dampingFactor = 0.065;
+controls.minDistance = 2;
+controls.maxDistance = 6;
+controls.maxPolarAngle = Math.PI / 2;
+controls.minPolarAngle = 0;
 
 // Handle window resize
 window.addEventListener("resize", onWindowResize);
