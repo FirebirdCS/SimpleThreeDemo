@@ -13,12 +13,12 @@ const viewport = document.querySelector('[data-3d="c"]');
 
 // Camera
 const camera = new THREE.PerspectiveCamera(
-  50,
-  window.innerWidth / window.innerHeight, // Aspect ratio
-  0.1, // Near plane
-  1000 // Far plane
+  75,
+  window.innerWidth / window.innerHeight,
+  0.1,
+  1000
 );
-camera.position.set(10, 10, 10);
+camera.position.set(4, 3, 5);
 
 // Scene
 const scene = new THREE.Scene();
