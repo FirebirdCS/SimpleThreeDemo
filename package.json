@@ -1,6 +1,7 @@
 {
   "scripts": {
-    "build": "node ./bin/build.js"
+    "build": "rollup -c",
+    "watch": "rollup -c -w"
   },
   "dependencies": {
     "@splinetool/loader": "^1.9.46",
