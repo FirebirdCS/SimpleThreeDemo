@@ -5,9 +5,11 @@ import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
 let model;
 
 const viewport = document.querySelector('[data-3d="c"]');
+const stl = getComputedStyle(div);
+const [w, h] = [parseInt(stl.width), parseInt(stl.height)];
 
 // Camera
-const camera = new THREE.PerspectiveCamera(60, 2, 1, 1000);
+const camera = new THREE.PerspectiveCamera(60, w / h, 0.1, 1000);
 camera.position.set(5, 6, 7);
 
 // Scene
@@ -30,8 +32,8 @@ loader.load(
 );
 
 // Renderer
-const renderer = new THREE.WebGLRenderer({ antialias: true });
-renderer.setSize(window.innerWidth, window.innerHeight);
+const renderer = new THREE.WebGLRenderer({ viewport, antialias: true });
+renderer.setSize(w, h, false);
 renderer.setAnimationLoop(animate);
 viewport.appendChild(renderer.domElement);
 renderer.shadowMap.enabled = true;
