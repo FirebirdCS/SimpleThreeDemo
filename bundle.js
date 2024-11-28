@@ -43630,7 +43630,7 @@ const camera = new PerspectiveCamera(
   0.1,
   1000
 );
-camera.position.set(3, 4, 3);
+camera.position.set(5, 6, 7);
 
 // Scene
 const scene = new Scene();
@@ -43642,7 +43642,7 @@ loader.load(
   function (gltf) {
     model = gltf.scene;
     model.position.set(0, 0, 0);
-    model.scale.set(0.8, 0.8, 0.8);
+    model.scale.set(0.6, 0.6, 0.6);
     scene.add(model);
   },
   undefined,
