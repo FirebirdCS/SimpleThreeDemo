@@ -4,20 +4,10 @@ import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
 
 let model;
 
-window.Webflow ||= [];
-window.Webflow.push(() => {
-  console.log("hello");
-});
-
 const viewport = document.querySelector('[data-3d="c"]');
 
 // Camera
-const camera = new THREE.PerspectiveCamera(
-  60,
-  window.innerWidth / window.innerHeight,
-  0.1,
-  1000
-);
+const camera = new THREE.PerspectiveCamera(60, 2, 1, 1000);
 camera.position.set(5, 6, 7);
 
 // Scene
@@ -43,7 +33,7 @@ loader.load(
 const renderer = new THREE.WebGLRenderer({ antialias: true });
 renderer.setSize(window.innerWidth, window.innerHeight);
 renderer.setAnimationLoop(animate);
-viewport.appendChild(renderer.domElement);
+document.body.appendChild(renderer.domElement);
 renderer.shadowMap.enabled = true;
 renderer.shadowMap.type = THREE.PCFShadowMap;
 
@@ -58,16 +48,25 @@ controls.maxDistance = 6;
 controls.maxPolarAngle = Math.PI / 2;
 controls.minPolarAngle = 0;
 
-// Handle window resize
-window.addEventListener("resize", onWindowResize);
-function onWindowResize() {
-  camera.aspect = window.innerWidth / window.innerHeight;
-  camera.updateProjectionMatrix();
-  renderer.setSize(window.innerWidth, window.innerHeight);
+function resizeCanvasToDisplaySize() {
+  const canvas = renderer.domElement;
+  // look up the size the canvas is being displayed
+  const width = canvas.clientWidth;
+  const height = canvas.clientHeight;
+
+  // adjust displayBuffer size to match
+  if (canvas.width !== width || canvas.height !== height) {
+    renderer.setSize(width, height, false);
+    camera.aspect = width / height;
+    camera.updateProjectionMatrix();
+
+    // update any render target sizes here
+  }
 }
 
 // Animation loop
 function animate() {
+  resizeCanvasToDisplaySize();
   if (model) {
     model.rotation.y += 0.0025;
   }
