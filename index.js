@@ -5,10 +5,14 @@ import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
 let model;
 
 const viewport = document.querySelector('[data-3d="c"]');
-const [w, h] = [parseInt(viewport.width), parseInt(viewport.height)];
 
 // Camera
-const camera = new THREE.PerspectiveCamera(60, w / h, 0.1, 1000);
+const camera = new THREE.PerspectiveCamera(
+  60,
+  window.innerWidth / window.innerHeight,
+  0.1,
+  1000
+);
 camera.position.set(5, 6, 7);
 
 // Scene
@@ -31,8 +35,8 @@ loader.load(
 );
 
 // Renderer
-const renderer = new THREE.WebGLRenderer({ viewport, antialias: true });
-renderer.setSize(w, h, false);
+const renderer = new THREE.WebGLRenderer({ antialias: true });
+renderer.setSize(window.innerWidth, window.innerHeight);
 renderer.setAnimationLoop(animate);
 viewport.appendChild(renderer.domElement);
 renderer.shadowMap.enabled = true;
@@ -49,25 +53,17 @@ controls.maxDistance = 6;
 controls.maxPolarAngle = Math.PI / 2;
 controls.minPolarAngle = 0;
 
-function resizeCanvasToDisplaySize() {
-  const canvas = renderer.domElement;
-  // look up the size the canvas is being displayed
-  const width = canvas.clientWidth;
-  const height = canvas.clientHeight;
-
-  // adjust displayBuffer size to match
-  if (canvas.width !== width || canvas.height !== height) {
-    renderer.setSize(width, height, false);
-    camera.aspect = width / height;
-    camera.updateProjectionMatrix();
-
-    // update any render target sizes here
-  }
+// Handle window resize
+window.addEventListener("resize", onWindowResize);
+function onWindowResize() {
+  camera.aspect = window.innerWidth / window.innerHeight;
+  camera.updateProjectionMatrix();
+  renderer.setSize(window.innerWidth, window.innerHeight);
 }
 
 // Animation loop
 function animate() {
-  resizeCanvasToDisplaySize();
+  onWindowResize();
   if (model) {
     model.rotation.y += 0.0025;
   }
