@@ -43617,8 +43617,7 @@ function addPrimitiveAttributes( geometry, primitiveDef, parser ) {
 let model;
 
 const viewport = document.querySelector('[data-3d="c"]');
-const stl = getComputedStyle(div);
-const [w, h] = [parseInt(stl.width), parseInt(stl.height)];
+const [w, h] = [parseInt(viewport.width), parseInt(viewport.height)];
 
 // Camera
 const camera = new PerspectiveCamera(60, w / h, 0.1, 1000);
